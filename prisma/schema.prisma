@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(auto()) @map("_id")
+  name      String
+  email     String   @unique
+  image     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  goals      Goal[]
+  workouts   Workout[]
+  meals      Meal[]
+  progress   Progress @relation(fields: [progressId], references: [id])
+  progressId Int
+}
+
+model Goal {
+  id          Int      @id @default(auto()) @map("_id")
+  userId      Int      @map("user_id")
+  name        String
+  target      Int
+  targetDate  DateTime
+  metric      String
+  progress    Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Workout {
+  id            Int      @id @default(auto()) @map("_id")
+  userId        Int      @map("user_id")
+  name          String
+  type          String
+  duration      Int
+  intensity     String
+  caloriesBurned Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+model Meal {
+  id        Int      @id @default(auto()) @map("_id")
+  userId    Int      @map("user_id")
+  name      String
+  description String
+  calories  Int
+  date      DateTime
+  time      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Progress {
+  id     Int      @id @default(auto()) @map("_id")
+  userId Int      @map("user_id")
+  weight Int[]
+  date   DateTime[]
+  user   User     @relation(fields: [userId], references: [id])
+}
