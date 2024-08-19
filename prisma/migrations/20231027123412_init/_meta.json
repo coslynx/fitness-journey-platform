@@ -1,0 +1,42 @@
+{
+  "lastMigration": 1698465652315,
+  "steps": [
+    {
+      "raw": "CREATE TABLE \"User\" (\n    \"id\" SERIAL PRIMARY KEY,\n    \"name\" TEXT NOT NULL,\n    \"email\" TEXT NOT NULL UNIQUE,\n    \"image\" TEXT,\n    \"password\" TEXT NOT NULL,\n    \"createdAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\n    \"updatedAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n  );",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "CREATE TABLE \"Goal\" (\n    \"id\" SERIAL PRIMARY KEY,\n    \"userId\" INTEGER NOT NULL,\n    \"name\" TEXT NOT NULL,\n    \"target\" INTEGER NOT NULL,\n    \"targetDate\" TIMESTAMP WITH TIME ZONE NOT NULL,\n    \"metric\" TEXT NOT NULL,\n    \"progress\" INTEGER NOT NULL,\n    \"createdAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\n    \"updatedAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n  );",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "CREATE TABLE \"Workout\" (\n    \"id\" SERIAL PRIMARY KEY,\n    \"userId\" INTEGER NOT NULL,\n    \"name\" TEXT NOT NULL,\n    \"type\" TEXT NOT NULL,\n    \"duration\" INTEGER NOT NULL,\n    \"intensity\" TEXT NOT NULL,\n    \"caloriesBurned\" INTEGER NOT NULL,\n    \"createdAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\n    \"updatedAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n  );",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "CREATE TABLE \"Meal\" (\n    \"id\" SERIAL PRIMARY KEY,\n    \"userId\" INTEGER NOT NULL,\n    \"name\" TEXT NOT NULL,\n    \"description\" TEXT,\n    \"calories\" INTEGER NOT NULL,\n    \"date\" TIMESTAMP WITH TIME ZONE NOT NULL,\n    \"time\" TEXT NOT NULL,\n    \"createdAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\n    \"updatedAt\" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP\n  );",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "CREATE TABLE \"Progress\" (\n    \"id\" SERIAL PRIMARY KEY,\n    \"userId\" INTEGER NOT NULL,\n    \"weight\" INTEGER[] NOT NULL,\n    \"date\" TIMESTAMP WITH TIME ZONE[] NOT NULL\n  );",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "ALTER TABLE \"Goal\" ADD CONSTRAINT \"Goal_userId_fkey\" FOREIGN KEY (\"userId\") REFERENCES \"User\"(\"id\") ON DELETE CASCADE;",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "ALTER TABLE \"Workout\" ADD CONSTRAINT \"Workout_userId_fkey\" FOREIGN KEY (\"userId\") REFERENCES \"User\"(\"id\") ON DELETE CASCADE;",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "ALTER TABLE \"Meal\" ADD CONSTRAINT \"Meal_userId_fkey\" FOREIGN KEY (\"userId\") REFERENCES \"User\"(\"id\") ON DELETE CASCADE;",
+      "applied": "2023-10-27T12:34:12.315Z"
+    },
+    {
+      "raw": "ALTER TABLE \"Progress\" ADD CONSTRAINT \"Progress_userId_fkey\" FOREIGN KEY (\"userId\") REFERENCES \"User\"(\"id\") ON DELETE CASCADE;",
+      "applied": "2023-10-27T12:34:12.315Z"
+    }
+  ],
+  "hash": "777915b76ff137717e6fa87a92d97dd40d14563a93863d1197639b9e08471d58"
+}
