@@ -1,0 +1,63 @@
+-- Create the User table
+CREATE TABLE "User" (
+  "id" SERIAL PRIMARY KEY,
+  "name" TEXT NOT NULL,
+  "email" TEXT NOT NULL UNIQUE,
+  "image" TEXT,
+  "password" TEXT NOT NULL,
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the Goal table
+CREATE TABLE "Goal" (
+  "id" SERIAL PRIMARY KEY,
+  "userId" INTEGER NOT NULL,
+  "name" TEXT NOT NULL,
+  "target" INTEGER NOT NULL,
+  "targetDate" TIMESTAMP WITH TIME ZONE NOT NULL,
+  "metric" TEXT NOT NULL,
+  "progress" INTEGER NOT NULL,
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the Workout table
+CREATE TABLE "Workout" (
+  "id" SERIAL PRIMARY KEY,
+  "userId" INTEGER NOT NULL,
+  "name" TEXT NOT NULL,
+  "type" TEXT NOT NULL,
+  "duration" INTEGER NOT NULL,
+  "intensity" TEXT NOT NULL,
+  "caloriesBurned" INTEGER NOT NULL,
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the Meal table
+CREATE TABLE "Meal" (
+  "id" SERIAL PRIMARY KEY,
+  "userId" INTEGER NOT NULL,
+  "name" TEXT NOT NULL,
+  "description" TEXT,
+  "calories" INTEGER NOT NULL,
+  "date" TIMESTAMP WITH TIME ZONE NOT NULL,
+  "time" TEXT NOT NULL,
+  "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the Progress table
+CREATE TABLE "Progress" (
+  "id" SERIAL PRIMARY KEY,
+  "userId" INTEGER NOT NULL,
+  "weight" INTEGER[] NOT NULL,
+  "date" TIMESTAMP WITH TIME ZONE[] NOT NULL
+);
+
+-- Add foreign keys to tables
+ALTER TABLE "Goal" ADD CONSTRAINT "Goal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE;
+ALTER TABLE "Workout" ADD CONSTRAINT "Workout_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE;
+ALTER TABLE "Meal" ADD CONSTRAINT "Meal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE;
+ALTER TABLE "Progress" ADD CONSTRAINT "Progress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE;
